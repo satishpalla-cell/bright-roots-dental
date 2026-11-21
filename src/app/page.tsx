@@ -239,16 +239,18 @@ const accessToken = localStorage.getItem(
   "bright-roots-access-token"
 );
 
-if (!conversationId || !accessToken) return;
-
-
+if (!conversationId || !accessToken) {
+  return;
+}
+const validConversationId: string = conversationId;
+const validAccessToken: string = accessToken;
   async function loadMessages() {
     try {
 const response = await fetch(
-  `/api/messages?conversationId=${encodeURIComponent(conversationId)}`,
+  `/api/messages?conversationId=${encodeURIComponent(validConversationId)}`,
   {
     headers: {
-      "x-conversation-token": accessToken,
+      "x-conversation-token": validAccessToken,
     },
   }
 );
