@@ -16,7 +16,7 @@ function detectLanguage(text: string) {
 }
 
 function isEmergency(text: string) {
-  return /emergency|accident|unconscious|heavy bleeding|severe bleeding|severe swelling|breathing difficulty|difficulty breathing|cannot breathe|trouble breathing|అత్యవసర|రక్తస్రావం|ఊపిరి ఆడటం లేదు|స్పృహ కోల్పోవడం|बेहोश|दुर्घटना|सांस नहीं|सांस लेने में कठिनाई|भारी खून|तेज रक्तस्राव/i.test(text);
+  return /emergency|accident|unconscious|heavy bleeding|severe bleeding|severe dental bleeding|dental bleeding|uncontrolled bleeding|continuous bleeding|severe pain|severe swelling|facial swelling|face swelling|jaw swelling|swelling of face|swelling of jaw|breathing difficulty|difficulty breathing|cannot breathe|trouble breathing|difficulty swallowing|అత్యవసర|రక్తస్రావం|ఊపిరి ఆడటం లేదు|స్పృహ కోల్పోవడం|ముఖం వాపు|తీవ్రమైన నొప్పి|बेहोश|दुर्घटना|सांस नहीं|सांस लेने में कठिनाई|भारी खून|तेज रक्तस्राव|चेहरे पर सूजन|गंभीर दर्द/i.test(text);
 }
 
 function isSymptom(text: string) {
