@@ -101,7 +101,7 @@ function findClinicAnswer(
     "how", "can", "could", "would",
     "you", "your", "for", "and", "with",
     "please", "tell", "about", "does",
-    "do", "does", "have", "has"
+    "do", "have", "has"
   ]);
 
   const questionWords = words.filter(
@@ -112,10 +112,11 @@ function findClinicAnswer(
   let bestScore = 0;
 
   for (const record of records) {
-
     const titleWords = tokenize(record.title || "");
     const categoryWords = tokenize(record.category || "");
     const contentWords = tokenize(record.content || "");
+    const hindiWords = tokenize(record.content_hi || "");
+    const teluguWords = tokenize(record.content_te || "");
 
     const keywordWords = tokenize(
       (record.keywords || []).join(" ")
@@ -124,22 +125,12 @@ function findClinicAnswer(
     let score = 0;
 
     for (const word of questionWords) {
-
-      if (keywordWords.includes(word)) {
-        score += 4;
-      }
-
-      if (titleWords.includes(word)) {
-        score += 3;
-      }
-
-      if (categoryWords.includes(word)) {
-        score += 3;
-      }
-
-      if (contentWords.includes(word)) {
-        score += 1;
-      }
+      if (keywordWords.includes(word)) score += 4;
+      if (titleWords.includes(word)) score += 3;
+      if (categoryWords.includes(word)) score += 3;
+      if (contentWords.includes(word)) score += 1;
+      if (hindiWords.includes(word)) score += 2;
+      if (teluguWords.includes(word)) score += 2;
     }
 
     if (score > bestScore) {
@@ -150,7 +141,6 @@ function findClinicAnswer(
 
   return bestScore >= 3 ? bestRecord : null;
 }
-
 function localizedReply(
   language: string,
   type: string,
@@ -341,9 +331,11 @@ const relevantRecords = matchedIntent
   : records;
 
 const matched = matchedIntent
-  ? relevantRecords.length > 0
-    ? findClinicAnswer(message, relevantRecords)
-    : null
+  ? relevantRecords.length === 1
+    ? relevantRecords[0]
+    : relevantRecords.length > 1
+      ? findClinicAnswer(message, relevantRecords)
+      : null
   : findClinicAnswer(message, relevantRecords);
 
 if (matched) {
