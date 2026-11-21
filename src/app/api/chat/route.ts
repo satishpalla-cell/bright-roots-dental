@@ -16,7 +16,7 @@ function detectLanguage(text: string) {
 }
 
 function isEmergency(text: string) {
-  return /emergency|accident|unconscious|heavy bleeding|severe bleeding|severe dental bleeding|dental bleeding|uncontrolled bleeding|continuous bleeding|severe pain|severe swelling|facial swelling|face swelling|jaw swelling|swelling of face|swelling of jaw|breathing difficulty|difficulty breathing|cannot breathe|trouble breathing|difficulty swallowing|అత్యవసర|రక్తస్రావం|ఊపిరి ఆడటం లేదు|స్పృహ కోల్పోవడం|ముఖం వాపు|తీవ్రమైన నొప్పి|बेहोश|दुर्घटना|सांस नहीं|सांस लेने में कठिनाई|भारी खून|तेज रक्तस्राव|चेहरे पर सूजन|गंभीर दर्द/i.test(text);
+  return /emergency|accident|unconscious|heavy bleeding|severe bleeding|severe dental bleeding|dental bleeding|uncontrolled bleeding|continuous bleeding|bleeding heavily|bleeding profusely|bleeding that won't stop|bleeding that will not stop|will not stop bleeding|won't stop bleeding|does not stop bleeding|not stopping bleeding|gum bleeding|gums bleeding|bleeding gums|severe pain|severe swelling|facial swelling|face swelling|jaw swelling|swelling of face|swelling of jaw|breathing difficulty|difficulty breathing|cannot breathe|trouble breathing|difficulty swallowing|అత్యవసర|రక్తస్రావం|ఊపిరి ఆడటం లేదు|స్పృహ కోల్పోవడం|ముఖం వాపు|తీవ్రమైన నొప్పి|बेहोश|दुर्घटना|सांस नहीं|सांस लेने में कठिनाई|भारी खून|तेज रक्तस्राव|चेहरे पर सूजन|गंभीर दर्द/i.test(text);
 }
 
 function isSymptom(text: string) {
@@ -230,7 +230,6 @@ export async function POST(req: NextRequest) {
     const emergency = isEmergency(message);
     const symptom = isSymptom(message);
     const booking = isBooking(message);
-
     let answer = "";
     let ticketStatus = "";
     let ticketType = "general";
@@ -240,8 +239,6 @@ export async function POST(req: NextRequest) {
 if (emergency) {
   const emergencyNumber =
     emergencyRecord?.content?.match(/\d{10,}/)?.[0] || "9000000001";
-console.log("Emergency record:", emergencyRecord);
-console.log("Extracted emergency number:", emergencyNumber);
   answer = localizedReply(
     language,
     "emergency",
